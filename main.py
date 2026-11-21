@@ -20,10 +20,13 @@ the chairs still warm.
 
 
 def main() -> None:
-    # The gate allows 1-280 Unicode characters; fail loudly instead of
-    # writing an entry the scorer would refuse.
+    # The gate allows 1-280 Unicode characters and refuses text that is
+    # only white space; fail loudly instead of writing an entry the
+    # scorer would refuse.
     if not 1 <= len(POEM) <= 280:
         raise SystemExit(f"poem is {len(POEM)} characters, must be 1-280")
+    if not POEM.strip():
+        raise SystemExit("poem must not be only white space")
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8") as f:
         f.write(POEM)
